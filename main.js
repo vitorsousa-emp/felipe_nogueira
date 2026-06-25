@@ -73,6 +73,126 @@ function initReveal() {
 
 
 /* ------------------------------------------------------------
+   7. BubbleLayout
+   Posiciona as bolhas na arena sem sobreposição.
+   Lógica simples: tenta posições aleatórias e verifica colisão
+   antes de fixar. Roda uma única vez no load e no resize.
+   ------------------------------------------------------------ */
+
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+function positionBubbles() {
+  const arena = document.querySelector('.bubbles-arena');
+  if (!arena) return;
+
+  const bubbles = arena.querySelectorAll('.bubble');
+
+  if (isMobile()) {
+    /* ── MOBILE: remove qualquer posição inline aplicada antes ── */
+    bubbles.forEach(b => {
+      b.style.left = '';
+      b.style.top = '';
+      b.style.right = '';
+      b.style.bottom = '';
+      /* Mantém a animação de flutuação — apenas o eixo Y */
+    });
+
+  } else {
+    /* ── DESKTOP: aplica posicionamento absoluto original ── */
+    const arenaW = arena.offsetWidth;
+    const arenaH = arena.offsetHeight;
+
+    /*
+     * Substitua o array abaixo pelas suas posições reais,
+     * expressas como fração de 0–1 do tamanho da arena.
+     * Ex.: { x: 0.1, y: 0.2 } = 10% da largura, 20% da altura.
+     *
+     * Usar frações garante que o layout escala com o container
+     * mesmo no desktop, sem bolhas saindo da borda.
+     */
+    const positions = [
+      { x: 0.08, y: 0.10 },
+      { x: 0.25, y: 0.55 },
+      { x: 0.42, y: 0.08 },
+      { x: 0.60, y: 0.62 },
+      { x: 0.75, y: 0.18 },
+      { x: 0.85, y: 0.55 },
+      { x: 0.50, y: 0.35 },
+      { x: 0.15, y: 0.75 },
+    ];
+
+    bubbles.forEach((b, i) => {
+      const pos = positions[i % positions.length];
+      const size = b.offsetWidth;
+
+      /* Clamp para a bolha não ultrapassar as bordas da arena */
+      const maxX = arenaW - size;
+      const maxY = arenaH - size;
+
+      b.style.left = Math.min(pos.x * arenaW, maxX) + 'px';
+      b.style.top = Math.min(pos.y * arenaH, maxY) + 'px';
+    });
+  }
+}
+
+/* ── Inicializa e re-executa no resize ── */
+positionBubbles();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(positionBubbles, 120);
+});
+
+function initBubbleLayout() {
+  const arena = document.getElementById("bubblesArena");
+  if (!arena) return;
+
+  const bubbles = Array.from(arena.querySelectorAll(".bubble"));
+  if (!bubbles.length) return;
+
+  const PADDING = 12; // margem mínima entre bolhas
+
+  function place() {
+    const W = arena.offsetWidth;
+    const H = arena.offsetHeight;
+    const placed = []; // { cx, cy, r }
+
+    bubbles.forEach((b) => {
+      const r = b.offsetWidth / 2;
+      let cx, cy, tries = 0, ok = false;
+
+      while (tries < 300 && !ok) {
+        tries++;
+        cx = r + Math.random() * (W - r * 2);
+        cy = r + Math.random() * (H - r * 2);
+        ok = placed.every((p) => {
+          const dx = cx - p.cx, dy = cy - p.cy;
+          return Math.sqrt(dx * dx + dy * dy) >= r + p.r + PADDING;
+        });
+      }
+
+      // Fallback: posição aleatória sem verificação
+      if (!ok) { cx = r + Math.random() * (W - r * 2); cy = r + Math.random() * (H - r * 2); }
+
+      placed.push({ cx, cy, r });
+      b.style.left = `${cx - r}px`;
+      b.style.top = `${cy - r}px`;
+    });
+  }
+
+  place();
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(place, 120);
+  });
+}
+
+/* ------------------------------------------------------------
    3. ScrollProgress
    Barra fina de bronze que cresce no topo conforme o usuário
    rola a página. Usa transform: scaleX() para performance.
@@ -102,6 +222,17 @@ function initScrollProgress() {
   window.addEventListener("resize", update);
 }
 
+function initHeaderScroll() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  const update = () => {
+    header.classList.toggle("is-scrolled", window.scrollY > 8);
+  };
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+}
 
 /* ------------------------------------------------------------
    4. Parallax
@@ -150,12 +281,12 @@ function initCursor() {
     return;
   }
 
-  const dot  = document.getElementById("cursorDot");
+  const dot = document.getElementById("cursorDot");
   const ring = document.getElementById("cursorRing");
   if (!dot || !ring) return;
 
   let mouseX = 0, mouseY = 0;   // posição atual do mouse
-  let ringX  = 0, ringY  = 0;   // posição interpolada do anel
+  let ringX = 0, ringY = 0;   // posição interpolada do anel
 
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
@@ -213,12 +344,12 @@ function initCounters() {
 
 function animateCounter(el) {
   const target = parseInt(el.dataset.counter || "0", 10);
-  const start  = performance.now();
+  const start = performance.now();
 
   const tick = (now) => {
     const progress = Math.min(1, (now - start) / COUNTER_DURATION_MS);
-    const eased    = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-    const value    = Math.round(eased * target);
+    const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    const value = Math.round(eased * target);
     el.textContent = value.toLocaleString("pt-BR");
     if (progress < 1) window.requestAnimationFrame(tick);
   };
@@ -291,4 +422,55 @@ document.addEventListener("DOMContentLoaded", () => {
   initCounters();
   initBrandTiles();
   initFooterYear();
+  initBubbleLayout();
+  initVideoPlay();
 });
+
+// Extrai o ID do vídeo aceitando URL completa (watch, shorts, youtu.be,
+// embed) ou apenas o ID puro, para evitar erro de cole-e-esqueça no HTML.
+function extractYouTubeId(raw) {
+  if (!raw) return null;
+
+  // Já é um ID puro (11 caracteres, sem barras/protocolo)
+  if (/^[\w-]{11}$/.test(raw)) return raw;
+
+  try {
+    const url = new URL(raw);
+    if (url.pathname.startsWith("/shorts/")) {
+      return url.pathname.split("/shorts/")[1];
+    }
+    if (url.hostname.includes("youtu.be")) {
+      return url.pathname.replace("/", "");
+    }
+    if (url.pathname.startsWith("/embed/")) {
+      return url.pathname.split("/embed/")[1];
+    }
+    return url.searchParams.get("v");
+  } catch {
+    return null;
+  }
+}
+
+function initVideoPlay() {
+  const frame = document.getElementById("videoFrame");
+  if (!frame) return;
+
+  const btn = frame.querySelector(".play-btn");
+  const ytId = extractYouTubeId(frame.dataset.ytId);
+
+  if (!btn || !ytId) {
+    console.warn("[initVideoPlay] data-yt-id inválido ou ausente:", frame.dataset.ytId);
+    return;
+  }
+
+  btn.addEventListener("click", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+    iframe.title = "Reel cinematográfico";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+
+    frame.appendChild(iframe);
+    frame.classList.add("is-playing");
+  });
+}

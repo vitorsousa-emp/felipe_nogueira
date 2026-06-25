@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
   <title>Felipe Nogueira — A estética do conteúdo muda o valor percebido</title>
-  <meta name="description" content="Felipe Nogueira é especialista em transformar a percepção de valor de marcas através da estética, narrativa e posicionamento visual." />
+  <meta name="description"
+    content="Felipe Nogueira é especialista em transformar a percepção de valor de marcas através da estética, narrativa e posicionamento visual." />
   <meta property="og:title" content="Felipe Nogueira — Personal Brand Experience" />
   <meta property="og:description" content="Estratégia, estética e narrativa para construir marcas memoráveis." />
   <meta property="og:type" content="website" />
@@ -14,12 +16,14 @@
   <!-- Tipografia: Cormorant Garamond (display serifa) + Inter (texto) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" />
 
   <!-- Estilos do projeto -->
   <link rel="stylesheet" href="styles.css" />
 
 </head>
+
 <body>
   <!--
     =====================================================================
@@ -51,7 +55,7 @@
   <header class="site-header">
     <div class="brand-mark">
       <span class="dot"></span>
-      <span class="eyebrow">FN — Personal Brand</span>
+      <span class="eyebrow">Felipe Nogueira</span>
     </div>
     <nav class="site-nav" aria-label="Principal">
       <a href="#sobre" class="eyebrow">Sobre</a>
@@ -83,11 +87,15 @@
             Estratégia, estética e narrativa para marcas que entendem que o detalhe muda tudo.
           </p>
           <div class="hero__cta reveal reveal--3">
-            <a class="btn-ghost" href="https://instagram.com" target="_blank" rel="noopener">
-              Instagram <svg class="arrow" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            <a class="btn-ghost" href="https://www.instagram.com/fellipesnogueira/" target="_blank" rel="noopener">
+              Instagram <svg class="arrow" viewBox="0 0 14 14">
+                <path d="M3 11L11 3M11 3H5M11 3V9" />
+              </svg>
             </a>
-            <a class="btn-ghost" href="https://youtube.com" target="_blank" rel="noopener">
-              YouTube <svg class="arrow" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            <a class="btn-ghost" href="https://www.youtube.com/@fellipesnogueira" target="_blank" rel="noopener">
+              YouTube <svg class="arrow" viewBox="0 0 14 14">
+                <path d="M3 11L11 3M11 3H5M11 3V9" />
+              </svg>
             </a>
           </div>
         </div>
@@ -95,7 +103,7 @@
         <!-- Frame vertical 9:16 — usado para foto/vídeo principal -->
         <div class="hero__video reveal reveal--2">
           <div class="vframe">
-            <img src="assets/hero.jpg" alt="Felipe Nogueira em produção cinematográfica" />
+            <img src="assets/felipe1.PNG" alt="Felipe Nogueira em produção cinematográfica" />
             <div class="vframe__hud">
               <span>REC · 4K</span>
               <span><i class="pulse-dot"></i> Bastidores</span>
@@ -104,7 +112,7 @@
         </div>
       </div>
 
-      
+
     </section>
 
     <!-- Marquee horizontal com áreas de atuação -->
@@ -124,7 +132,7 @@
       <aside class="about__media">
         <div class="reveal">
           <div class="eyebrow">Capítulo 01 — Quem é Felipe</div>
-          <img src="assets/felipe.jpg" alt="Retrato de Felipe Nogueira" class="about__photo" />
+          <img src="assets/felipe2.jpeg" alt="Retrato de Felipe Nogueira" class="" />
         </div>
       </aside>
       <div class="about__copy">
@@ -139,7 +147,7 @@
         </p>
         <p class="reveal reveal--2">
           Hoje, seu trabalho une <span class="accent">estratégia, criatividade,
-          fotografia, vídeo, branding e marketing</span> em uma única linguagem: a estética
+            fotografia, vídeo, branding e marketing</span> em uma única linguagem: a estética
           como ferramenta de posicionamento. Não se trata de fazer bonito. Trata-se de fazer
           a marca valer mais aos olhos de quem importa.
         </p>
@@ -197,7 +205,19 @@
       O JS apenas alterna a classe .is-active no clique (mobile).
       ===================================================================
     -->
-    <section class="section">
+    <!--
+  ===================================================================
+  EMPRESAS — Bolhas flutuantes com logos das marcas.
+  ===================================================================
+-->
+    <section class="brands-bubble-section reveal" id="empresas">
+      <!-- Partículas de fundo -->
+      <div class="bubble-particles" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+
       <div class="container">
         <div class="brands__head">
           <div>
@@ -207,21 +227,24 @@
             </h2>
           </div>
           <p class="reveal reveal--2 muted brands__sub">
-            Mais do que clientes — parcerias de longo prazo construídas sobre coerência estética
-            e leitura estratégica. Toque em uma marca para conhecer a parceria.
+            Mais do que clientes — parcerias de longo prazo construídas
+            sobre coerência estética e leitura estratégica.
           </p>
         </div>
+      </div>
 
-        <div class="brands__grid" id="brandsGrid">
-          <button class="logo-tile reveal" data-desc="Direção criativa de campanha global — 4 propriedades, 12 meses."><span>Aurora Hotels</span></button>
-          <button class="logo-tile reveal" data-desc="Reposicionamento visual da carta de degustação e identidade de mesa."><span>Maison Petrov</span></button>
-          <button class="logo-tile reveal" data-desc="Série documental de bastidores e branded content para temporada."><span>Costa Verde</span></button>
-          <button class="logo-tile reveal" data-desc="Direção de arte e curadoria estética da nova coleção."><span>Atelier Bronze</span></button>
-          <button class="logo-tile reveal" data-desc="Cinematografia institucional — campanhas sazonais 2023–2025."><span>Hôtel Marin</span></button>
-          <button class="logo-tile reveal" data-desc="Estratégia de conteúdo e direção fotográfica para lançamento."><span>Lumière &amp; Co.</span></button>
-          <button class="logo-tile reveal" data-desc="Reposicionamento de marca e narrativa visual contínua."><span>Ristoro Nove</span></button>
-          <button class="logo-tile reveal" data-desc="Documentário de hospitalidade e captação aérea."><span>Solare Resort</span></button>
-        </div>
+      <!-- Arena das bolhas -->
+      <div class="bubbles-arena" id="bubblesArena" aria-hidden="true">
+        <div class="bubble bubble--lg" data-float="1"><img src="assets/caravaggio.jpeg" alt=""></div>
+        <div class="bubble bubble--md" data-float="2"><img src="assets/carbone.jpeg" alt=""></div>
+        <div class="bubble bubble--sm" data-float="3"><img src="assets/cocobambu.jpeg" alt=""></div>
+        <div class="bubble bubble--xl" data-float="4"><img src="assets/alchymist.jpeg" alt=""></div>
+        <div class="bubble bubble--sm" data-float="5"><img src="assets/matissi.jpeg" alt=""></div>
+        <div class="bubble bubble--md" data-float="6"><img src="assets/nucci.jpeg" alt=""></div>
+        <div class="bubble bubble--lg" data-float="7"><img src="assets/oriental.jpeg" alt=""></div>
+        <div class="bubble bubble--sm" data-float="8"><img src="assets/ryori.jpeg" alt=""></div>
+        <div class="bubble bubble--sm" data-float="8"><img src="assets/santagrelha.jpeg" alt=""></div>
+        <div class="bubble bubble--sm" data-float="8"><img src="assets/vasto.jpeg" alt=""></div>
       </div>
     </section>
 
@@ -239,10 +262,12 @@
         </h2>
       </div>
       <div class="video-section__frame reveal reveal--2">
-        <div class="vframe vframe--shadow">
-          <img src="assets/hero.jpg" alt="Reel cinematográfico" loading="lazy" />
+        <div class="vframe vframe--shadow" id="videoFrame" data-yt-id="CFgeI7-B9jE">
+          <img src="assets/felipe1.PNG" alt="Reel cinematográfico" loading="lazy" />
           <button type="button" class="play-btn" aria-label="Reproduzir reel">
-            <svg viewBox="0 0 20 22"><path d="M2 2L18 11L2 20V2Z"/></svg>
+            <svg viewBox="0 0 20 22" aria-hidden="true">
+              <path d="M2 2L18 11L2 20V2Z" />
+            </svg>
           </button>
         </div>
       </div>
@@ -264,27 +289,46 @@
         <div class="process__grid">
           <article class="process__card reveal">
             <span class="process__num">01</span>
-            <div><h3>Observar.</h3><p class="muted">Antes da câmera, o olhar. Estudo o universo da marca, seus rituais e silêncios.</p></div>
+            <div>
+              <h3>Observar.</h3>
+              <p class="muted">Antes da câmera, o olhar. Estudo o universo da marca, seus rituais e silêncios.</p>
+            </div>
           </article>
           <article class="process__card reveal reveal--1">
             <span class="process__num">02</span>
-            <div><h3>Entender.</h3><p class="muted">Mapeio o que a marca diz, o que ela quer dizer e o que o público percebe.</p></div>
+            <div>
+              <h3>Entender.</h3>
+              <p class="muted">Mapeio o que a marca diz, o que ela quer dizer e o que o público percebe.</p>
+            </div>
           </article>
           <article class="process__card reveal reveal--2">
             <span class="process__num">03</span>
-            <div><h3>Planejar.</h3><p class="muted">Construo um plano estético e narrativo, frame por frame, antes da produção.</p></div>
+            <div>
+              <h3>Planejar.</h3>
+              <p class="muted">Construo um plano estético e narrativo, frame por frame, antes da produção.</p>
+            </div>
           </article>
           <article class="process__card reveal reveal--3">
             <span class="process__num">04</span>
-            <div><h3>Criar.</h3><p class="muted">Direção de arte, roteiro, referência e linguagem visual coerente com o posicionamento.</p></div>
+            <div>
+              <h3>Criar.</h3>
+              <p class="muted">Direção de arte, roteiro, referência e linguagem visual coerente com o posicionamento.
+              </p>
+            </div>
           </article>
           <article class="process__card reveal">
             <span class="process__num">05</span>
-            <div><h3>Produzir.</h3><p class="muted">Captação cinematográfica com equipamento e equipe selecionados para cada projeto.</p></div>
+            <div>
+              <h3>Produzir.</h3>
+              <p class="muted">Captação cinematográfica com equipamento e equipe selecionados para cada projeto.</p>
+            </div>
           </article>
           <article class="process__card reveal reveal--1">
             <span class="process__num">06</span>
-            <div><h3>Posicionar.</h3><p class="muted">Entrega editorial, calendário de publicação e leitura estratégica de resultados.</p></div>
+            <div>
+              <h3>Posicionar.</h3>
+              <p class="muted">Entrega editorial, calendário de publicação e leitura estratégica de resultados.</p>
+            </div>
           </article>
         </div>
       </div>
@@ -300,7 +344,7 @@
         <div class="social__head">
           <div class="eyebrow reveal">Capítulo 07 — Acompanhe</div>
           <h2 class="display reveal reveal--1">
-            A história continua <em>por lá.</em>
+            A história continua <br><em>por lá.</em>
           </h2>
           <p class="reveal reveal--2 muted">
             Bastidores, ensaios, processo e visão estratégica — publicados diariamente.
@@ -308,44 +352,57 @@
         </div>
 
         <div class="social__grid">
-          <a href="https://instagram.com" target="_blank" rel="noopener" class="social-card reveal" style="--cover: url('assets/bts3.jpg')">
+          <a href="https://www.instagram.com/fellipesnogueira/" target="_blank" rel="noopener"
+            class="social-card reveal" style="--cover: url('assets/felipe2.jpeg')">
             <div class="social-card__cover"></div>
             <div class="social-card__overlay"></div>
             <div class="social-card__body">
               <div class="social-card__top">
                 <span class="eyebrow">Instagram</span>
                 <span class="social-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r=".9" fill="currentColor" />
+                  </svg>
                 </span>
               </div>
               <div>
-                <div class="social-card__count">248K</div>
+                <div class="social-card__count">94k</div><br>
                 <div class="eyebrow" style="margin-bottom: 1.5rem">seguidores</div>
                 <div class="hairline hairline--short"></div>
                 <div class="social-card__handle">@felipenogueira</div>
                 <p class="muted small">Frames diários, bastidores e ensaios visuais.</p>
-                <span class="social-card__follow">Seguir <svg class="arrow" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg></span>
+                <span class="social-card__follow">Seguir <svg class="arrow" viewBox="0 0 14 14">
+                    <path d="M3 11L11 3M11 3H5M11 3V9" />
+                  </svg></span>
               </div>
             </div>
           </a>
 
-          <a href="https://youtube.com" target="_blank" rel="noopener" class="social-card reveal reveal--1" style="--cover: url('assets/bts1.jpg')">
+          <a href="https://www.youtube.com/@fellipesnogueira" target="_blank" rel="noopener"
+            class="social-card reveal reveal--1" style="--cover: url('assets/felipe3.jpeg')">
             <div class="social-card__cover"></div>
             <div class="social-card__overlay"></div>
             <div class="social-card__body">
               <div class="social-card__top">
                 <span class="eyebrow">YouTube</span>
                 <span class="social-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <rect x="2" y="5" width="20" height="14" rx="3" />
+                    <path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none" />
+                  </svg>
                 </span>
               </div>
               <div>
-                <div class="social-card__count">86K</div>
+                <div class="social-card__count">1k</div>
                 <div class="eyebrow" style="margin-bottom: 1.5rem">inscritos</div>
                 <div class="hairline hairline--short"></div>
                 <div class="social-card__handle">Felipe Nogueira</div>
                 <p class="muted small">Documentários longos, processo criativo e cinematografia.</p>
-                <span class="social-card__follow">Inscrever-se <svg class="arrow" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg></span>
+                <span class="social-card__follow">Inscrever-se <svg class="arrow" viewBox="0 0 14 14">
+                    <path d="M3 11L11 3M11 3H5M11 3V9" />
+                  </svg></span>
               </div>
             </div>
           </a>
@@ -371,11 +428,15 @@
         <div class="reveal reveal--2 closing__sig">
           <div class="closing__name">Felipe Nogueira</div>
           <div class="closing__cta">
-            <a class="btn-ghost" href="https://instagram.com" target="_blank" rel="noopener">
-              Instagram <svg class="arrow" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            <a class="btn-ghost" href="https://www.instagram.com/fellipesnogueira/" target="_blank" rel="noopener">
+              Instagram <svg class="arrow" viewBox="0 0 14 14">
+                <path d="M3 11L11 3M11 3H5M11 3V9" />
+              </svg>
             </a>
-            <a class="btn-ghost" href="https://youtube.com" target="_blank" rel="noopener">
-              YouTube <svg class="arrow" viewBox="0 0 14 14"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            <a class="btn-ghost" href="https://www.youtube.com/@fellipesnogueira" target="_blank" rel="noopener">
+              YouTube <svg class="arrow" viewBox="0 0 14 14">
+                <path d="M3 11L11 3M11 3H5M11 3V9" />
+              </svg>
             </a>
           </div>
         </div>
@@ -393,4 +454,5 @@
   <!-- Scripts (ESM, sem dependências) -->
   <script type="module" src="main.js"></script>
 </body>
+
 </html>
