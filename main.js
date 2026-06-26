@@ -89,106 +89,24 @@ function positionBubbles() {
 
   const bubbles = arena.querySelectorAll('.bubble');
 
-  if (isMobile()) {
-    /* ── MOBILE: remove qualquer posição inline aplicada antes ── */
-    bubbles.forEach(b => {
-      b.style.left = '';
-      b.style.top = '';
-      b.style.right = '';
-      b.style.bottom = '';
-      /* Mantém a animação de flutuação — apenas o eixo Y */
-    });
-
-  } else {
-    /* ── DESKTOP: aplica posicionamento absoluto original ── */
-    const arenaW = arena.offsetWidth;
-    const arenaH = arena.offsetHeight;
-
-    /*
-     * Substitua o array abaixo pelas suas posições reais,
-     * expressas como fração de 0–1 do tamanho da arena.
-     * Ex.: { x: 0.1, y: 0.2 } = 10% da largura, 20% da altura.
-     *
-     * Usar frações garante que o layout escala com o container
-     * mesmo no desktop, sem bolhas saindo da borda.
-     */
-    const positions = [
-      { x: 0.08, y: 0.10 },
-      { x: 0.25, y: 0.55 },
-      { x: 0.42, y: 0.08 },
-      { x: 0.60, y: 0.62 },
-      { x: 0.75, y: 0.18 },
-      { x: 0.85, y: 0.55 },
-      { x: 0.50, y: 0.35 },
-      { x: 0.15, y: 0.75 },
-    ];
-
-    bubbles.forEach((b, i) => {
-      const pos = positions[i % positions.length];
-      const size = b.offsetWidth;
-
-      /* Clamp para a bolha não ultrapassar as bordas da arena */
-      const maxX = arenaW - size;
-      const maxY = arenaH - size;
-
-      b.style.left = Math.min(pos.x * arenaW, maxX) + 'px';
-      b.style.top = Math.min(pos.y * arenaH, maxY) + 'px';
-    });
-  }
+  /* Remove posições inline em qualquer tamanho de tela */
+  bubbles.forEach(b => {
+    b.style.left = '';
+    b.style.top = '';
+    b.style.right = '';
+    b.style.bottom = '';
+    b.style.position = '';
+  });
 }
 
-/* ── Inicializa e re-executa no resize ── */
-positionBubbles();
-
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(positionBubbles, 120);
-});
-
+/* ── initBubbleLayout: apelido para positionBubbles, chamado no DOMContentLoaded ── */
 function initBubbleLayout() {
-  const arena = document.getElementById("bubblesArena");
-  if (!arena) return;
-
-  const bubbles = Array.from(arena.querySelectorAll(".bubble"));
-  if (!bubbles.length) return;
-
-  const PADDING = 12; // margem mínima entre bolhas
-
-  function place() {
-    const W = arena.offsetWidth;
-    const H = arena.offsetHeight;
-    const placed = []; // { cx, cy, r }
-
-    bubbles.forEach((b) => {
-      const r = b.offsetWidth / 2;
-      let cx, cy, tries = 0, ok = false;
-
-      while (tries < 300 && !ok) {
-        tries++;
-        cx = r + Math.random() * (W - r * 2);
-        cy = r + Math.random() * (H - r * 2);
-        ok = placed.every((p) => {
-          const dx = cx - p.cx, dy = cy - p.cy;
-          return Math.sqrt(dx * dx + dy * dy) >= r + p.r + PADDING;
-        });
-      }
-
-      // Fallback: posição aleatória sem verificação
-      if (!ok) { cx = r + Math.random() * (W - r * 2); cy = r + Math.random() * (H - r * 2); }
-
-      placed.push({ cx, cy, r });
-      b.style.left = `${cx - r}px`;
-      b.style.top = `${cy - r}px`;
-    });
-  }
-
-  place();
+  positionBubbles();
 
   let resizeTimer;
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(place, 120);
+    resizeTimer = setTimeout(positionBubbles, 120);
   });
 }
 
@@ -410,6 +328,65 @@ function initFooterYear() {
 
 
 /* ------------------------------------------------------------
+   10. Marquee
+   O loop infinito (translateX 0 -> -50%) sofre de erro de
+   arredondamento de subpixel quando a largura do conteúdo
+   duplicado não é um número exato de pixels (comum com
+   fontes itálicas/decorativas). Isso aparece como um pequeno
+   "vão" na emenda do loop, mais visível em telas de PC.
+
+   Solução: medir a largura real do primeiro <span> via JS e
+   aplicar esse valor exato (em px) na variável --marquee-w,
+   usada pelo keyframe em vez de uma porcentagem calculada.
+   ------------------------------------------------------------ */
+function initMarquee() {
+  const marquees = document.querySelectorAll(".marquee");
+  if (!marquees.length) return;
+
+  // Garante cópias suficientes para que a faixa sempre tenha,
+  // no mínimo, o dobro da largura da tela. Sem isso, em telas
+  // largas (PC) o texto duplicado acaba antes de a animação
+  // completar o ciclo, deixando um vazio à direita.
+  const ensureEnoughCopies = (marquee) => {
+    const original = marquee.querySelector("span");
+    if (!original) return;
+
+    // Volta ao estado inicial (1 span) antes de recalcular,
+    // evitando acumular clones em resizes sucessivos.
+    marquee.querySelectorAll("span").forEach((s, i) => {
+      if (i > 0) s.remove();
+    });
+
+    const baseWidth = original.getBoundingClientRect().width;
+    if (baseWidth <= 0) return;
+
+    const target = window.innerWidth * 2;
+    const copiesNeeded = Math.ceil(target / baseWidth) + 1; // +1 de margem
+
+    for (let i = 1; i < copiesNeeded; i++) {
+      marquee.appendChild(original.cloneNode(true));
+    }
+
+    marquee.style.setProperty("--marquee-w", `${baseWidth}px`);
+  };
+
+  marquees.forEach(ensureEnoughCopies);
+
+  // Recalcula em resize e quando as fontes terminarem de carregar
+  // (a largura do texto pode mudar com o swap de fonte)
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => marquees.forEach(ensureEnoughCopies), 150);
+  });
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => marquees.forEach(ensureEnoughCopies));
+  }
+}
+
+
+/* ------------------------------------------------------------
    9. Bootstrap
    Inicializa todos os módulos após o DOM estar pronto.
    ------------------------------------------------------------ */
@@ -424,6 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initFooterYear();
   initBubbleLayout();
   initVideoPlay();
+  initMarquee();
 });
 
 // Extrai o ID do vídeo aceitando URL completa (watch, shorts, youtu.be,

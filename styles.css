@@ -375,6 +375,12 @@ body {
   font-size: clamp(1.25rem, 2.4vw, 1.75rem);
   color: rgba(245, 245, 245, 0.4);
   animation: marquee 20s linear infinite;
+  /* Fallback caso o JS não rode: usa -50% como antes */
+  --marquee-w: 50%;
+}
+
+.marquee span {
+  flex: 0 0 auto;
 }
 
 @keyframes marquee {
@@ -383,7 +389,7 @@ body {
   }
 
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-1 * var(--marquee-w)));
   }
 }
 
@@ -509,11 +515,16 @@ body {
   padding-block: 1rem;
 }
 
-/* Desktop: volta ao posicionamento absoluto livre */
+/* Desktop: grid centralizado */
 @media (min-width: 769px) {
   .bubbles-arena {
-    display: block;
-    height: clamp(420px, 55vh, 620px);
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    height: auto;
+    padding-block: 2rem;
   }
 }
 
@@ -526,14 +537,16 @@ body {
     0 0 0 1px rgba(162, 124, 82, 0.08) inset,
     0 8px 32px rgba(0, 0, 0, 0.45),
     0 0 60px rgba(162, 124, 82, 0.04);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   display: grid;
-  position: relative; /* já existe no desktop, adiciona no base */
-  place-items: center;  
+  position: relative;
+  /* já existe no desktop, adiciona no base */
+  place-items: center;
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
   will-change: transform;
-  flex-shrink: 0; /* evita que flex comprima as bolhas */
+  flex-shrink: 0;
+  /* evita que flex comprima as bolhas */
 }
 
 /* No mobile bolhas ficam com tamanho relativo ao viewport */
@@ -569,7 +582,7 @@ body {
 /* Tamanhos desktop (posicionamento absoluto) */
 @media (min-width: 769px) {
   .bubble {
-    position: absolute;
+    position: relative;
   }
 
   .bubble--sm {
@@ -622,73 +635,263 @@ body {
    layout flex do mobile quanto no absolute do desktop.
 ------------------------------------------------------- */
 @keyframes float1 {
-  0%,  100% { transform: translate(0px,   0px); }
-  33%        { transform: translate(6px,  -10px); }
-  66%        { transform: translate(-4px,  8px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(6px, -10px);
+  }
+
+  66% {
+    transform: translate(-4px, 8px);
+  }
 }
 
 @keyframes float2 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(-8px,  6px); }
-  66%        { transform: translate(5px,  -9px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(-8px, 6px);
+  }
+
+  66% {
+    transform: translate(5px, -9px);
+  }
 }
 
 @keyframes float3 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(7px,  5px); }
-  66%        { transform: translate(-6px, -7px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(7px, 5px);
+  }
+
+  66% {
+    transform: translate(-6px, -7px);
+  }
 }
 
 @keyframes float4 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(-5px, -8px); }
-  66%        { transform: translate(8px,   6px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(-5px, -8px);
+  }
+
+  66% {
+    transform: translate(8px, 6px);
+  }
 }
 
 @keyframes float5 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(4px,  9px); }
-  66%        { transform: translate(-7px, -4px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(4px, 9px);
+  }
+
+  66% {
+    transform: translate(-7px, -4px);
+  }
 }
 
 @keyframes float6 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(-9px,  4px); }
-  66%        { transform: translate(6px,  -8px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(-9px, 4px);
+  }
+
+  66% {
+    transform: translate(6px, -8px);
+  }
 }
 
 @keyframes float7 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(5px,  -6px); }
-  66%        { transform: translate(-8px,  9px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(5px, -6px);
+  }
+
+  66% {
+    transform: translate(-8px, 9px);
+  }
 }
 
 @keyframes float8 {
-  0%,  100% { transform: translate(0px,  0px); }
-  33%        { transform: translate(-6px, -9px); }
-  66%        { transform: translate(9px,   5px); }
+
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+
+  33% {
+    transform: translate(-6px, -9px);
+  }
+
+  66% {
+    transform: translate(9px, 5px);
+  }
 }
 
 /* No mobile, reduz o deslocamento para não empurrar bolhas vizinhas */
 @media (max-width: 768px) {
-  @keyframes float1 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-6px)} }
-  @keyframes float2 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-5px)} }
-  @keyframes float3 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-7px)} }
-  @keyframes float4 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-4px)} }
-  @keyframes float5 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-6px)} }
-  @keyframes float6 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-5px)} }
-  @keyframes float7 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-7px)} }
-  @keyframes float8 { 0%,100%{transform:translate(0,0)}50%{transform:translateY(-4px)} }
+  @keyframes float1 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-6px)
+    }
+  }
+
+  @keyframes float2 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-5px)
+    }
+  }
+
+  @keyframes float3 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-7px)
+    }
+  }
+
+  @keyframes float4 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-4px)
+    }
+  }
+
+  @keyframes float5 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-6px)
+    }
+  }
+
+  @keyframes float6 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-5px)
+    }
+  }
+
+  @keyframes float7 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-7px)
+    }
+  }
+
+  @keyframes float8 {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translateY(-4px)
+    }
+  }
 }
 
-.bubble[data-float="1"] { animation: float1  7s   ease-in-out infinite; }
-.bubble[data-float="2"] { animation: float2  9s   ease-in-out infinite; }
-.bubble[data-float="3"] { animation: float3  6s   ease-in-out infinite; }
-.bubble[data-float="4"] { animation: float4 11s   ease-in-out infinite; }
-.bubble[data-float="5"] { animation: float5  8s   ease-in-out infinite; }
-.bubble[data-float="6"] { animation: float6 10s   ease-in-out infinite; }
-.bubble[data-float="7"] { animation: float7  7.5s ease-in-out infinite; }
-.bubble[data-float="8"] { animation: float8  9.5s ease-in-out infinite; }
+.bubble[data-float="1"] {
+  animation: float1 7s ease-in-out infinite;
+}
+
+.bubble[data-float="2"] {
+  animation: float2 9s ease-in-out infinite;
+}
+
+.bubble[data-float="3"] {
+  animation: float3 6s ease-in-out infinite;
+}
+
+.bubble[data-float="4"] {
+  animation: float4 11s ease-in-out infinite;
+}
+
+.bubble[data-float="5"] {
+  animation: float5 8s ease-in-out infinite;
+}
+
+.bubble[data-float="6"] {
+  animation: float6 10s ease-in-out infinite;
+}
+
+.bubble[data-float="7"] {
+  animation: float7 7.5s ease-in-out infinite;
+}
+
+.bubble[data-float="8"] {
+  animation: float8 9.5s ease-in-out infinite;
+}
 
 /* Partículas de fundo */
 .bubble-particles {
