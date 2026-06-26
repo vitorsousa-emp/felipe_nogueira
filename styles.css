@@ -1582,7 +1582,7 @@ body {
 .loader-text span {
   display: block;
   opacity: 0;
-  animation: loadFade 1s ease forwards;
+  animation: loadFade 2s ease forwards;
 }
 
 .loader-text span:nth-child(1) {
@@ -1590,7 +1590,7 @@ body {
 }
 
 .loader-text span:nth-child(2) {
-  animation-delay: 1.3s;
+  animation-delay: 1.3s;    
 }
 
 @keyframes loadFade {
